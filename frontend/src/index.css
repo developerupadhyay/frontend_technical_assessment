@@ -1,13 +1,282 @@
+/* ========================
+   Global Styles
+   ======================== */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f5f5f5;
+  color: #1e293b;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* ========================
+   Toolbar
+   ======================== */
+
+.toolbar {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 10;
+}
+
+.toolbar-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+
+.toolbar-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ========================
+   Draggable Node (Toolbar items)
+   ======================== */
+
+.draggable-node {
+  cursor: grab;
+  min-width: 72px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.draggable-node:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.draggable-node:active {
+  cursor: grabbing;
+  transform: translateY(0);
+}
+
+/* ========================
+   Base Node (Canvas nodes)
+   ======================== */
+
+.base-node {
+  min-width: 220px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  overflow: visible;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.base-node:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  border-color: #cbd5e1;
+}
+
+.base-node-header {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 11px 11px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.base-node-content {
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.base-node-content label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.base-node-content input[type="text"],
+.base-node-content select,
+.base-node-content textarea {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #1e293b;
+  background: #f8fafc;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+}
+
+.base-node-content input[type="text"]:focus,
+.base-node-content select:focus,
+.base-node-content textarea:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background: #fff;
+}
+
+.base-node-content select {
+  cursor: pointer;
+}
+
+.base-node-content span {
+  font-size: 13px;
+  color: #475569;
+}
+
+/* ========================
+   Handle Styles
+   ======================== */
+
+.base-node-handle {
+  width: 10px !important;
+  height: 10px !important;
+  background: #6366f1 !important;
+  border: 2px solid #fff !important;
+  box-shadow: 0 0 0 1px #6366f1;
+}
+
+.base-node-handle:hover {
+  background: #4f46e5 !important;
+  transform: scale(1.3);
+}
+
+/* ========================
+   Text Node
+   ======================== */
+
+.text-node-textarea {
+  resize: none;
+  overflow: hidden;
+  min-height: 32px;
+  line-height: 1.5;
+}
+
+.text-node-variables {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.variable-tag {
+  display: inline-block;
+  background: #ede9fe;
+  color: #6366f1;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px !important;
+  font-weight: 600;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, monospace;
+}
+
+/* ========================
+   Submit Bar
+   ======================== */
+
+.submit-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #fff;
+  border-top: 1px solid #e2e8f0;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  border: none;
+  padding: 10px 32px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+}
+
+.submit-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(99, 102, 241, 0.3);
+}
+
+/* ========================
+   React Flow Overrides
+   ======================== */
+
+.react-flow__node {
+  border-radius: 12px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.react-flow__node.selected .base-node {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3), 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.react-flow__edge-path {
+  stroke: #94a3b8 !important;
+  stroke-width: 2 !important;
+}
+
+.react-flow__controls {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.react-flow__controls-button {
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.react-flow__minimap {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0 !important;
 }
